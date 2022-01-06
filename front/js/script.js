@@ -13,7 +13,6 @@ function addProducts(kanaps) {
   //   console.log("kanap numéro", i, data[i]);
   // }
   kanaps.forEach((kanap) => {
-    // console.log("kanap", kanap);
     const { _id, imageUrl, altTxt, name, description } = kanap;
 
     const anchor = makeAnchor(_id);
