@@ -1,7 +1,7 @@
+//Récupération  de l'URL de la page courante
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const id = urlParams.get("id");
-console.log({ id });
 
 fetch(`http://localhost:3000/api/products/${id}`)
   .then((res) => res.json())
@@ -15,9 +15,12 @@ function getData(kanap) {
   // const imageUrl = kanap.imageUrl;
   // const name = kanap.name;
   // const price = kanap.price;
-  // const _id = kanap._id;
-  const { altTxt, colors, description, imageUrl, name, price, _id } = kanap;
+  const { altTxt, colors, description, imageUrl, name, price } = kanap;
   makeImage(imageUrl, altTxt);
+  makeTitle(name);
+  makePrice(price);
+  makeDescription(description);
+  makeColors(colors);
 }
 
 //affichage de l'image
@@ -26,5 +29,30 @@ function makeImage(imageUrl, altTxt) {
   image.src = imageUrl;
   image.alt = altTxt;
   const parent = document.querySelector(".item__img");
-  if (parent != null) parent.appendChild(image);
+  parent.appendChild(image);
+}
+//affichage du nom
+function makeTitle(name) {
+  const h1 = document.querySelector("#title");
+  h1.innerHTML = name;
+}
+//affichage du prix
+function makePrice(price) {
+  const span = document.querySelector("#price");
+  span.textContent = price;
+}
+//affichage de la description
+function makeDescription(description) {
+  const p = document.querySelector("#description");
+  p.textContent = description;
+}
+//choix des couleurs
+function makeColors(colors) {
+  const select = document.querySelector("#colors");
+  colors.forEach((color) => {
+    const option = document.createElement("option");
+    option.value = color;
+    option.textContent = color;
+    select.appendChild(option);
+  });
 }

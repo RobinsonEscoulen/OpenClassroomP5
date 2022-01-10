@@ -2,6 +2,7 @@ fetch("http://localhost:3000/api/products")
   .then((res) => res.json())
   .then((data) => addProducts(data));
 
+//ajout des kanaps
 function addProducts(kanaps) {
   // const _id = kanaps[0]._id;
   // const imageUrl = kanaps[0].imageUrl;
