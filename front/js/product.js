@@ -2,6 +2,7 @@
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const id = urlParams.get("id");
+let itemPrice = 0;
 
 fetch(`http://localhost:3000/api/products/${id}`)
   .then((res) => res.json())
@@ -16,6 +17,7 @@ function getData(kanap) {
   // const name = kanap.name;
   // const price = kanap.price;
   const { altTxt, colors, description, imageUrl, name, price } = kanap;
+  itemPrice = price;
   makeImage(imageUrl, altTxt);
   makeTitle(name);
   makePrice(price);
@@ -66,4 +68,11 @@ button.addEventListener("click", (e) => {
   if (color == null || color === "" || quantity == null || quantity == 0) {
     alert("Veuillez saisir une couleur et une quantité");
   }
+  const data = {
+    id: id,
+    color: color,
+    quantity: Number(quantity),
+    price: itemPrice,
+  };
+  localStorage.setItem(id, JSON.stringify(data));
 });
