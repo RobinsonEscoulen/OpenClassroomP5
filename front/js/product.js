@@ -56,3 +56,14 @@ function makeColors(colors) {
     select.appendChild(option);
   });
 }
+
+//Panier
+
+const button = document.querySelector("#addToCart");
+button.addEventListener("click", (e) => {
+  const color = document.querySelector("#colors").value;
+  const quantity = document.querySelector("#quantity").value;
+  if (color == null || color === "" || quantity == null || quantity == 0) {
+    alert("Veuillez saisir une couleur et une quantité");
+  }
+});

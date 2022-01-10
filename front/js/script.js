@@ -44,10 +44,8 @@ function makeAnchor(id) {
 
 function appendArticleToAnchor(anchor, article) {
   const items = document.querySelector("#items");
-  if (items != null) {
-    items.appendChild(anchor);
-    anchor.appendChild(article);
-  }
+  items.appendChild(anchor);
+  anchor.appendChild(article);
 }
 
 function makeImage(imageUrl, altTxt) {
