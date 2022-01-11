@@ -3,6 +3,7 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const id = urlParams.get("id");
 let itemPrice = 0;
+let imgUrl, altText;
 
 fetch(`http://localhost:3000/api/products/${id}`)
   .then((res) => res.json())
@@ -18,6 +19,8 @@ function getData(kanap) {
   // const price = kanap.price;
   const { altTxt, colors, description, imageUrl, name, price } = kanap;
   itemPrice = price;
+  imgUrl = imageUrl;
+  altText = altTxt;
   makeImage(imageUrl, altTxt);
   makeTitle(name);
   makePrice(price);
@@ -62,17 +65,35 @@ function makeColors(colors) {
 //Panier
 
 const button = document.querySelector("#addToCart");
-button.addEventListener("click", (e) => {
+button.addEventListener("click", handleClick);
+
+function handleClick() {
   const color = document.querySelector("#colors").value;
   const quantity = document.querySelector("#quantity").value;
-  if (color == null || color === "" || quantity == null || quantity == 0) {
-    alert("Veuillez saisir une couleur et une quantité");
-  }
+  if (invalidOrder(color, quantity)) return;
+  saveOrder(color, quantity);
+  redirectToCart();
+}
+
+function saveOrder(color, quantity) {
   const data = {
     id: id,
     color: color,
     quantity: Number(quantity),
     price: itemPrice,
+    imageUrl: imgUrl,
+    altTxt: altText,
   };
   localStorage.setItem(id, JSON.stringify(data));
-});
+}
+
+function invalidOrder(color, quantity) {
+  if (color == null || color === "" || quantity == null || quantity == 0) {
+    alert("Veuillez saisir une couleur et une quantité");
+    return true;
+  }
+}
+
+function redirectToCart() {
+  window.location.href = "cart.html";
+}
