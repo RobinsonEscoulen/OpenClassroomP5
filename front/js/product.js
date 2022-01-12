@@ -3,7 +3,7 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const id = urlParams.get("id");
 let itemPrice = 0;
-let imgUrl, altText;
+let imgUrl, altText, nameArticle;
 
 fetch(`http://localhost:3000/api/products/${id}`)
   .then((res) => res.json())
@@ -21,7 +21,7 @@ function getData(kanap) {
   itemPrice = price;
   imgUrl = imageUrl;
   altText = altTxt;
-  makeImage(imageUrl, altTxt);
+  nameArticle = name;
   makeTitle(name);
   makePrice(price);
   makeDescription(description);
@@ -83,6 +83,7 @@ function saveOrder(color, quantity) {
     price: itemPrice,
     imageUrl: imgUrl,
     altTxt: altText,
+    name: nameArticle,
   };
   localStorage.setItem(id, JSON.stringify(data));
 }
