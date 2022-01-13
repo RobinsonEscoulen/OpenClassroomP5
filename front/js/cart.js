@@ -6,7 +6,7 @@ cart.forEach((item) => displayItem(item));
 function collectItems() {
   const numberItems = localStorage.length;
   for (let i = 0; i < numberItems; i++) {
-    const item = localStorage.getItem(localStorage.key(i)) || "";
+    const item = localStorage.getItem(localStorage.key(i));
     const itemObject = JSON.parse(item);
     cart.push(itemObject);
   }
@@ -20,6 +20,12 @@ function displayItem(item) {
   const cardItemContent = makeCartContent(item);
   article.appendChild(cardItemContent);
   displayArticle(article);
+  displayTotalQuantity(item);
+}
+
+function displayTotalQuantity(item) {
+  const totalQuantity = document.querySelector("#totalQuantity");
+  totalQuantity.textContent = item.quantity;
 }
 
 function makeCartContent(item) {
@@ -39,7 +45,17 @@ function makeSettings(item) {
   settings.classList.add("cart__item__content__settings");
 
   addQuantity(settings, item);
+  canDelete(settings);
   return settings;
+}
+
+function canDelete(settings) {
+  const div = document.createElement("div");
+  div.classList.add("cart__item__content__settings__delete");
+  const p = document.createElement("p");
+  p.textContent = "Supprimer";
+  div.appendChild(p);
+  settings.appendChild(div);
 }
 
 function addQuantity(settings, item) {
@@ -55,7 +71,8 @@ function addQuantity(settings, item) {
   input.min = "1";
   input.max = "100";
   input.value = item.quantity;
-  settings.appendChild(input);
+  quantity.appendChild(input);
+  settings.appendChild(quantity);
 }
 
 function makeDescription(item) {
