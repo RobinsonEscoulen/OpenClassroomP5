@@ -22,6 +22,7 @@ function getData(kanap) {
   imgUrl = imageUrl;
   altText = altTxt;
   nameArticle = name;
+  makeImage(imageUrl, altTxt);
   makeTitle(name);
   makePrice(price);
   makeDescription(description);

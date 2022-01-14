@@ -20,12 +20,31 @@ function displayItem(item) {
   const cardItemContent = makeCartContent(item);
   article.appendChild(cardItemContent);
   displayArticle(article);
-  displayTotalQuantity(item);
+  displayTotalQuantity();
+  displayTotalPrice();
 }
 
-function displayTotalQuantity(item) {
+function displayTotalQuantity() {
+  let total = 0;
   const totalQuantity = document.querySelector("#totalQuantity");
-  totalQuantity.textContent = item.quantity;
+
+  cart.forEach((item) => {
+    const totalItemQuantity = item.quantity;
+    total += totalItemQuantity;
+  });
+
+  totalQuantity.textContent = total;
+}
+
+function displayTotalPrice() {
+  let total = 0;
+  const totalprice = document.querySelector("#totalPrice");
+
+  cart.forEach((item) => {
+    const totalUnitPrice = item.price * item.quantity;
+    total += totalUnitPrice;
+  });
+  totalprice.textContent = total;
 }
 
 function makeCartContent(item) {
