@@ -91,17 +91,23 @@ function addQuantity(settings, item) {
   input.max = "100";
   input.value = item.quantity;
   input.addEventListener("input", () =>
-    updatePriceQuantity(item.id, input.value)
+    updatePriceQuantity(item.id, input.value, item)
   );
   quantity.appendChild(input);
   settings.appendChild(quantity);
 }
 
-function updatePriceQuantity(id, newValue) {
+function updatePriceQuantity(id, newValue, item) {
   const itemToUpdate = cart.find((item) => item.id === id);
   itemToUpdate.quantity = Number(newValue);
   displayTotalQuantity();
   displayTotalPrice();
+  saveNewData(item);
+}
+
+function saveNewData(item) {
+  const dataToSave = JSON.stringify(item);
+  localStorage.setItem(item.id, dataToSave);
 }
 
 function makeDescription(item) {
