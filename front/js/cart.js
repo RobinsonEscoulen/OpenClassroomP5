@@ -90,8 +90,18 @@ function addQuantity(settings, item) {
   input.min = "1";
   input.max = "100";
   input.value = item.quantity;
+  input.addEventListener("input", () =>
+    updatePriceQuantity(item.id, input.value)
+  );
   quantity.appendChild(input);
   settings.appendChild(quantity);
+}
+
+function updatePriceQuantity(id, newValue) {
+  const itemToUpdate = cart.find((item) => item.id === id);
+  itemToUpdate.quantity = Number(newValue);
+  displayTotalQuantity();
+  displayTotalPrice();
 }
 
 function makeDescription(item) {
