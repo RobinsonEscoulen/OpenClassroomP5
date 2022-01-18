@@ -64,19 +64,38 @@ function makeSettings(item) {
   settings.classList.add("cart__item__content__settings");
 
   addQuantity(settings, item);
-  canDelete(settings);
+  canDelete(settings, item);
   return settings;
 }
 
-function canDelete(settings) {
+function canDelete(settings, item) {
   const div = document.createElement("div");
   div.classList.add("cart__item__content__settings__delete");
+  div.addEventListener("click", () => deleteItem(item));
+
   const p = document.createElement("p");
   p.textContent = "Supprimer";
   div.appendChild(p);
   settings.appendChild(div);
 }
 
+function deleteItem(item) {
+  const itemToDelete = cart.findIndex(
+    (product) => product.id === item.id && product.color === item.color
+  );
+  cart.splice(itemToDelete, 1);
+  displayTotalPrice();
+  displayTotalQuantity();
+  deleteData(item);
+  deleteArticle(item);
+}
+
+function deleteArticle(item) {
+  const articleToDelete = document.querySelector(
+    `article[data-id="${item.id}"][data-color="${item.color}"]`
+  );
+  articleToDelete.remove();
+}
 function addQuantity(settings, item) {
   const quantity = document.createElement("div");
   quantity.classList.add("cart__item__content__settings__quantity");
@@ -105,6 +124,11 @@ function updatePriceQuantity(id, newValue, item) {
   displayTotalQuantity();
   displayTotalPrice();
   saveNewData(item);
+}
+
+function deleteData(item) {
+  const key = `${item.id}-${item.color}`;
+  localStorage.removeItem(key);
 }
 
 function saveNewData(item) {
