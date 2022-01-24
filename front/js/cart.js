@@ -174,3 +174,77 @@ function makeDivImage(item) {
   div.appendChild(image);
   return div;
 }
+
+// Formulaire
+
+const orderButton = document.querySelector("#order");
+orderButton.addEventListener("click", (e) => submitForm(e));
+
+function submitForm(e) {
+  e.preventDefault();
+  if (cart.length === 0) {
+    alert("Votre panier est vide");
+    return;
+  }
+
+  if (invalidation()) return;
+
+  const body = makeRequestBody();
+  fetch("http://localhost:3000/api/products/order", {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      const orderId = data.orderId;
+      window.location.href =
+        "/front/html/confirmation.html" + "?orderId=" + orderId;
+    })
+    .catch((err) => console.error(err));
+}
+
+function invalidation() {
+  const form = document.querySelector(".cart__order__form");
+  const inputs = form.querySelectorAll("input");
+  inputs.forEach((input) => {
+    if (input.value === "") {
+      alert("Veuillez renseigner tout les champs");
+      return true;
+    }
+    return false;
+  });
+}
+
+function makeRequestBody() {
+  const form = document.querySelector(".cart__order__form");
+  const firstName = form.elements.firstName.value;
+  const lastName = form.elements.lastName.value;
+  const address = form.elements.address.value;
+  const city = form.elements.city.value;
+  const email = form.elements.email.value;
+  const body = {
+    contact: {
+      firstName: firstName,
+      lastName: lastName,
+      adress: address,
+      city: city,
+      email: email,
+    },
+    products: getIds(),
+  };
+  return body;
+}
+
+function getIds() {
+  const numberOfProducts = localStorage.length;
+  const ids = [];
+  for (let i = 0; i < numberOfProducts; i++) {
+    const key = localStorage.key(i);
+    const id = key.split("-")[0];
+    ids.push(id);
+  }
+  return ids;
+}
