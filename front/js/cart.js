@@ -25,26 +25,18 @@ function displayItem(item) {
 }
 
 function displayTotalQuantity() {
-  let total = 0;
   const totalQuantity = document.querySelector("#totalQuantity");
-
-  cart.forEach((item) => {
-    const totalItemQuantity = item.quantity;
-    total += totalItemQuantity;
-  });
-
+  const total = cart.reduce((total, item) => total + item.quantity, 0);
   totalQuantity.textContent = total;
 }
 
 function displayTotalPrice() {
-  let total = 0;
-  const totalprice = document.querySelector("#totalPrice");
-
-  cart.forEach((item) => {
-    const totalUnitPrice = item.price * item.quantity;
-    total += totalUnitPrice;
-  });
-  totalprice.textContent = total;
+  const totalPrice = document.querySelector("#totalPrice");
+  const total = cart.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+  totalPrice.textContent = total;
 }
 
 function makeCartContent(item) {

@@ -1,6 +1,6 @@
 const orderId = getOrderId();
 displayOrderId(orderId);
-cleanStorage();
+// cleanStorage();
 
 function getOrderId() {
   const queryString = window.location.search;
@@ -13,7 +13,7 @@ function displayOrderId(orderId) {
   orderIdElement.textContent = orderId;
 }
 
-function cleanStorage() {
-  const clean = window.localStorage;
-  clean.clear();
-}
+// function cleanStorage() {
+//   const clean = window.localStorage;
+//   clean.clear();
+// }
