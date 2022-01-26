@@ -1,4 +1,4 @@
-fetch("http://localhost:3000/api/products")
+fetch(`http://localhost:3000/api/products`)
   .then((res) => res.json())
   .then((data) => addProducts(data));
 
@@ -44,6 +44,7 @@ function makeAnchor(id) {
 
 function appendArticleToAnchor(anchor, article) {
   const items = document.querySelector("#items");
+
   items.appendChild(anchor);
   anchor.appendChild(article);
 }

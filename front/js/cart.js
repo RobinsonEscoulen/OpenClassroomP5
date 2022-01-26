@@ -88,6 +88,7 @@ function deleteArticle(item) {
   );
   articleToDelete.remove();
 }
+
 function addQuantity(settings, item) {
   const quantity = document.createElement("div");
   quantity.classList.add("cart__item__content__settings__quantity");

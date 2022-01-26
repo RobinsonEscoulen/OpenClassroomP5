@@ -2,6 +2,7 @@
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const id = urlParams.get("id");
+
 let itemPrice = 0;
 let imgUrl, altText, nameArticle;
 
