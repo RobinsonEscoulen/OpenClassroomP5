@@ -181,6 +181,7 @@ function submitForm(e) {
   }
 
   if (invalidation()) return;
+  if (invalidEmail()) return;
 
   const body = makeRequestBody();
   fetch("http://localhost:3000/api/products/order", {
@@ -194,7 +195,7 @@ function submitForm(e) {
     .then((data) => {
       const orderId = data.orderId;
       window.location.href =
-        "/front/html/confirmation.html" + "?orderId=" + orderId;
+        "../html/confirmation.html" + "?orderId=" + orderId;
     })
     .catch((err) => console.error(err));
 }
@@ -209,6 +210,16 @@ function invalidation() {
     }
     return false;
   });
+}
+
+function invalidEmail() {
+  const email = document.querySelector("#email").value;
+  const regex = /^[A-Za-z0-9+_.-]+@(.+)$/;
+  if (regex.test(email) === false) {
+    alert("Veuillez entrer une adresse mail valide");
+    return true;
+  }
+  return false;
 }
 
 function makeRequestBody() {
